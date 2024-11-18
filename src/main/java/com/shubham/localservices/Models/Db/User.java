@@ -14,6 +14,8 @@ public class User {
 
     private String name;
 
+    String profileImg;
+
     @Column(unique = true)
     private String email;
     private String password;
@@ -41,6 +43,14 @@ public class User {
         this.role = role;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+    }
+
+    public String getProfileImg() {
+        return profileImg;
+    }
+
+    public void setProfileImg(String profileImg) {
+        this.profileImg = profileImg;
     }
 
     public Long getUserId() {

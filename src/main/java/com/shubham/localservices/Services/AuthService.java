@@ -3,13 +3,14 @@ package com.shubham.localservices.Services;
 import com.shubham.localservices.Models.AuthRequest;
 import com.shubham.localservices.Models.AuthResponse;
 import com.shubham.localservices.Models.Db.FreelancerProfile;
-import com.shubham.localservices.Models.Db.Role;
 import com.shubham.localservices.Models.Db.User;
+import com.shubham.localservices.Repository.FreelanceRepository;
 import com.shubham.localservices.Repository.UserRepository;
 import com.shubham.localservices.Services.Interfaces.AuthServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -17,6 +18,8 @@ import java.util.Optional;
 public class AuthService implements AuthServiceInterface {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private FreelanceRepository freelanceRepository;
 
 
     @Override
@@ -55,7 +58,14 @@ public class AuthService implements AuthServiceInterface {
 
     @Override
     public Long createFreelanceProfile(FreelancerProfile profile) {
-
-        return 0;
+        Long userid = profile.getUserId();
+        Optional<User> user = userRepository.findById(userid);
+        if(user.isPresent()){
+            profile.setUser(user.get());
+            freelanceRepository.save(profile);
+            Optional<FreelancerProfile> res = freelanceRepository.findByuserId(userid);
+            if(res.isPresent())return res.get().getProfileId();
+        }
+        return -1L;
     }
 }

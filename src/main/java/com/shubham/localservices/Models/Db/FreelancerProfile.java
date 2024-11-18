@@ -12,7 +12,7 @@ public class FreelancerProfile {
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
-    private int userid;
+    private Long userId;
 
     private String bio;
     private String skills; // Can be stored as a JSON string
@@ -22,16 +22,7 @@ public class FreelancerProfile {
     private Double rating;
     private Integer reviewsCount;
 
-
-    public FreelancerProfile(Long profileId, User user, int userid, String bio, String skills, Double hourlyRate, Double rating, Integer reviewsCount) {
-        this.profileId = profileId;
-        this.user = user;
-        this.userid = userid;
-        this.bio = bio;
-        this.skills = skills;
-        this.hourlyRate = hourlyRate;
-        this.rating = rating;
-        this.reviewsCount = reviewsCount;
+    public FreelancerProfile() {
     }
 
     public Long getProfileId() {
@@ -50,12 +41,12 @@ public class FreelancerProfile {
         this.user = user;
     }
 
-    public int getUserid() {
-        return userid;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUserid(int userid) {
-        this.userid = userid;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getBio() {
@@ -95,6 +86,17 @@ public class FreelancerProfile {
     }
 
     public void setReviewsCount(Integer reviewsCount) {
+        this.reviewsCount = reviewsCount;
+    }
+
+    public FreelancerProfile(Long profileId, User user, Long userid, String bio, String skills, Double hourlyRate, Double rating, Integer reviewsCount) {
+        this.profileId = profileId;
+        this.user = user;
+        this.userId = userid;
+        this.bio = bio;
+        this.skills = skills;
+        this.hourlyRate = hourlyRate;
+        this.rating = rating;
         this.reviewsCount = reviewsCount;
     }
 }
