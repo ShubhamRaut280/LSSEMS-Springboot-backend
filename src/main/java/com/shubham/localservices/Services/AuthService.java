@@ -7,9 +7,9 @@ import com.shubham.localservices.Models.Db.User;
 import com.shubham.localservices.Repository.UserRepository;
 import com.shubham.localservices.Services.Interfaces.AuthServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -36,5 +36,21 @@ public class AuthService implements AuthServiceInterface {
 
         // user dosen't exist
         return new AuthResponse(false, -1, "User not found");
+    }
+
+    @Override
+    public Long register(User user) {
+        LocalDateTime currdate = LocalDateTime.now();
+        user.setUpdatedAt(currdate);
+        user.setCreatedAt(currdate);
+        try {
+            String email = user.getEmail();
+            userRepository.save(user);
+            Optional<User> saved = userRepository.findByEmail(email);
+            if(saved.isPresent())return saved.get().getUserId();
+        }catch (Exception e){
+            return -1L;
+        }
+        return -1L;
     }
 }

@@ -2,6 +2,8 @@ package com.shubham.localservices.Controllers;
 
 import com.shubham.localservices.Models.AuthRequest;
 import com.shubham.localservices.Models.AuthResponse;
+import com.shubham.localservices.Models.Db.User;
+import com.shubham.localservices.Models.RegisterResponse;
 import com.shubham.localservices.Services.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,4 +27,15 @@ public class AuthController {
         return new ResponseEntity<>(authService.login(request), OK);
     }
 
+    @PostMapping("/register")
+    private ResponseEntity<RegisterResponse> register(@RequestBody User user){
+        Long res = authService.register(user);
+        RegisterResponse response;
+        if(res == -1){
+             response = new RegisterResponse(false, res, "Registration failed");
+        }else {
+            response = new RegisterResponse(true, res, "Registration succeed");
+        }
+        return new ResponseEntity<>(response, OK);
+    }
 }
