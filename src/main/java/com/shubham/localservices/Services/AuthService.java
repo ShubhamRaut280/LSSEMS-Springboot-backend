@@ -26,10 +26,7 @@ public class AuthService implements AuthServiceInterface {
         Optional<User> user = userRepository.findByEmail(request.getEmail());
         if(user.isPresent()){
             User curruser = user.get();
-            int role = -1;
-            if(curruser.getRole() == Role.USER){
-                role = 1;
-            }else role = 2;
+            int role = curruser.getRole();
 
             return new AuthResponse(true, role, "User found");
         }
@@ -49,6 +46,7 @@ public class AuthService implements AuthServiceInterface {
             Optional<User> saved = userRepository.findByEmail(email);
             if(saved.isPresent())return saved.get().getUserId();
         }catch (Exception e){
+            System.out.println("Error"+e.getMessage());
             return -1L;
         }
         return -1L;

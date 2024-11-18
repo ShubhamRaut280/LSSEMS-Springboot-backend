@@ -1,28 +1,26 @@
 package com.shubham.localservices.Models.Db;
 
 import jakarta.persistence.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
 @Entity
 @Table(name = "users")
-public class User implements UserDetails {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
 
     private String name;
+
+    @Column(unique = true)
     private String email;
     private String password;
-    private String phoneNumber;
+    private Long phoneNumber;
     private String address;
 
-    @Enumerated(EnumType.STRING)
-    private Role role;
+    private int role;
 
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
@@ -30,8 +28,10 @@ public class User implements UserDetails {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    public User() {
+    }
 
-    public User(Long userId, String name, String email, String password, String phoneNumber, String address, Role role, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public User(Long userId, String name, String email, String password, Long phoneNumber, String address, int role, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.userId = userId;
         this.name = name;
         this.email = email;
@@ -67,16 +67,11 @@ public class User implements UserDetails {
         this.email = email;
     }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
-    }
 
     public String getPassword() {
         return password;
     }
 
-    @Override
     public String getUsername() {
         return "";
     }
@@ -85,11 +80,11 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    public String getPhoneNumber() {
+    public Long getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
+    public void setPhoneNumber(Long phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
@@ -101,11 +96,11 @@ public class User implements UserDetails {
         this.address = address;
     }
 
-    public Role getRole() {
+    public int getRole() {
         return role;
     }
 
-    public void setRole(Role role) {
+    public void setRole(int role) {
         this.role = role;
     }
 
