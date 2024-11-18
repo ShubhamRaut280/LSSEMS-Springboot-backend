@@ -2,6 +2,7 @@ package com.shubham.localservices.Services;
 
 import com.shubham.localservices.Models.AuthRequest;
 import com.shubham.localservices.Models.AuthResponse;
+import com.shubham.localservices.Models.Db.FreelancerProfile;
 import com.shubham.localservices.Models.Db.Role;
 import com.shubham.localservices.Models.Db.User;
 import com.shubham.localservices.Repository.UserRepository;
@@ -50,5 +51,11 @@ public class AuthService implements AuthServiceInterface {
             return -1L;
         }
         return -1L;
+    }
+
+    @Override
+    public Long createFreelanceProfile(FreelancerProfile profile) {
+
+        return 0;
     }
 }
